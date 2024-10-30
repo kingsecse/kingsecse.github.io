@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>kingsec.se</title>
+    <style>
+        /* Remove default margins and paddings */
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        /* Center the logo at the top and make it smaller */
+        #logo {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #logo img {
+            width: 100px; /* Adjust the size as needed */
+            height: auto;
+        }
+
+        /* Style the container that holds the face and speech bubble */
+        #container {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            align-items: center;
+        }
+
+        /* Style the face image (reduced by 40%) */
+        #face {
+            width: 120px; /* Reduced from 200px to 120px */
+            height: auto;
+        }
+
+        /* Style the speech bubble */
+        #speech-bubble {
+            position: relative;
+            background: #fff;
+            border: 2px solid #000;
+            border-radius: 10px;
+            padding: 10px;
+            max-width: 250px; /* Adjust as needed */
+            margin-left: 20px; /* Space between face and speech bubble */
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Nicer font */
+        }
+
+        /* Create the speech bubble tail */
+        #speech-bubble:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: -20px;
+            border: 10px solid transparent;
+            border-right: 10px solid #000;
+            margin-top: -10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Logo image centered at the top -->
+    <div id="logo">
+        <img src="logo.png" alt="Logo">
+    </div>
+    <!-- Container holding the face image and speech bubble -->
+    <div id="container">
+        <img id="face" src="face.png" alt="Face">
+        <div id="speech-bubble">
+            <!-- Random text will be inserted here -->
+        </div>
+    </div>
+    <script>
+        // Array of texts to be used in the speech bubble
+        var texts = [
+            "Det är försent att ställa frågor, nu är det fan dags att agera!",
+            "Med allt det som händer i vår omvärld, NATO-ansökningar, krig osv., så får det en påverkan!",
+            "Nä, men alltså... nätet är fantastiskt!",
+            "Risken att någonting händer ökar tyvärr hela tiden!",
+            "Vad är det jag trycker på, det här som är direkt skickat till mig? Är det för bra för att vara sant?"
+        ];
+
+        // Select a random text from the array
+        var randomIndex = Math.floor(Math.random() * texts.length);
+        var randomText = texts[randomIndex];
+
+        // Insert the text into the speech bubble
+        document.getElementById('speech-bubble').innerText = randomText;
+
+        var container = document.getElementById('container');
+
+        // Variables to store current position and target position
+        var currentX = window.innerWidth / 2;
+        var currentY = window.innerHeight / 2;
+        var targetX = currentX;
+        var targetY = currentY;
+        var mouseInside = false;
+
+        // Function to smoothly animate the container towards the target position
+        function animate() {
+            // Calculate the difference between current and target positions
+            var dx = targetX - currentX;
+            var dy = targetY - currentY;
+
+            // Apply easing (adjust the 0.1 factor to change the speed)
+            currentX += dx * 0.1;
+            currentY += dy * 0.1;
+
+            // Update the container's position
+            container.style.left = currentX + 'px';
+            container.style.top = currentY + 'px';
+
+            // Continue the animation
+            requestAnimationFrame(animate);
+        }
+
+        // Start the animation
+        animate();
+
+        // Event listener for mouse movement
+        document.addEventListener('mousemove', function(event) {
+            mouseInside = true;
+            targetX = event.clientX;
+            targetY = event.clientY;
+        });
+
+        // Event listener for when the mouse leaves the window
+        document.addEventListener('mouseout', function(event) {
+            // If the mouse leaves the window (event.relatedTarget is null)
+            if (!event.relatedTarget || event.relatedTarget.nodeName === "HTML") {
+                mouseInside = false;
+                // Move back to center
+                targetX = window.innerWidth / 2;
+                targetY = window.innerHeight / 2;
+            }
+        });
+
+        // Adjust target position when window is resized
+        window.addEventListener('resize', function() {
+            if (!mouseInside) {
+                targetX = window.innerWidth / 2;
+                targetY = window.innerHeight / 2;
+            }
+        });
+    </script>
+</body>
+</html>
