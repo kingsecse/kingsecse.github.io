@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>kingsec.se</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Responsive meta tag -->
     <style>
         /* Remove default margins and paddings */
         body {
@@ -11,14 +12,16 @@
             overflow: hidden;
         }
 
-        /* Center the logo at the top and make it smaller */
+        /* Center the logo at the top and make it responsive */
         #logo {
             text-align: center;
             margin-top: 20px;
         }
 
         #logo img {
-            width: 100px; /* Adjust the size as needed */
+            width: 20vw; /* Make the logo size responsive */
+            max-width: 150px; /* Ensure it doesn't get too large */
+            min-width: 100px; /* Ensure it doesn't get too small */
             height: auto;
         }
 
@@ -30,11 +33,16 @@
             transform: translate(-50%, -50%);
             display: flex;
             align-items: center;
+            flex-direction: row; /* Always keep items in a row */
+            padding: 10px;
+            max-width: 90vw;
         }
 
-        /* Style the face image (reduced by 40%) */
+        /* Style the face image */
         #face {
-            width: 120px; /* Reduced from 200px to 120px */
+            width: 25vw; /* Responsive width */
+            max-width: 150px; /* Ensure it doesn't get too large */
+            min-width: 80px;  /* Ensure it doesn't get too small */
             height: auto;
         }
 
@@ -45,9 +53,10 @@
             border: 2px solid #000;
             border-radius: 10px;
             padding: 10px;
-            max-width: 250px; /* Adjust as needed */
+            max-width: 60vw; /* Responsive max width */
             margin-left: 20px; /* Space between face and speech bubble */
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Nicer font */
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: clamp(12px, 3vw, 16px); /* Responsive font size */
         }
 
         /* Create the speech bubble tail */
@@ -59,6 +68,22 @@
             border: 10px solid transparent;
             border-right: 10px solid #000;
             margin-top: -10px;
+        }
+
+        /* Adjustments for small screens */
+        @media (max-width: 400px) {
+            #logo img {
+                width: 30vw;
+            }
+
+            #face {
+                width: 35vw;
+            }
+
+            #speech-bubble {
+                max-width: 55vw;
+                margin-left: 10px;
+            }
         }
     </style>
 </head>
@@ -81,7 +106,7 @@
             "Med allt det som händer i vår omvärld, NATO-ansökningar, krig osv., så får det en påverkan!",
             "Nä, men alltså... nätet är fantastiskt!",
             "Risken att någonting händer ökar tyvärr hela tiden!",
-            "Vad är det jag trycker på, det här som är direkt skickat till mig? Är det för bra för att vara sant?"
+            "Vad är det jag trycker på, det här som är direktskickat till mig? Är det för bra för att vara sant?"
         ];
 
         // Select a random text from the array
